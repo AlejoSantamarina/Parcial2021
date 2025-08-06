@@ -36,7 +36,11 @@ public class GruposYPaquetes extends ElemUn {
     }
 
     public int getDureza() {
-        int menor = 0;
+        if(elementos.isEmpty()) {
+            return 0;
+        }
+
+        int menor = elementos.get(0).getDureza();
         for(ElemUn elem : elementos) {
             int dureza = elem.getDureza();
             if(dureza < menor) {
@@ -64,26 +68,27 @@ public class GruposYPaquetes extends ElemUn {
             elementosFiltrados.add(this);
         }
         for(ElemUn elem : elementos) {
-            if(c.cumple(elem)) {
-                elementosFiltrados.add(elem);
-            }
+            elementosFiltrados.addAll(elem.buscar(c));
         }
         return elementosFiltrados;
     }
 
+    public boolean sePuedeExhibir(Condicion c) {
+        return c.cumple(this);
+    }
+
     public ElemUn getCopia(Condicion c) {
-        ArrayList<ElemUn> elementosFiltrados = new ArrayList<>();
+        GruposYPaquetes gruposYPaquetesCopia = new GruposYPaquetes(this.getNombre());
+
         for(ElemUn elem : elementos) {
-            if(c.cumple(elem)) {
-                elementosFiltrados.add(elem);
+            ElemUn copiaElem = elem.getCopia(c);
+            if(copiaElem != null) {
+                gruposYPaquetesCopia.agregarElemento(copiaElem);
             }
         }
-        if(elementosFiltrados.isEmpty()) {
+
+        if(gruposYPaquetesCopia.elementos.isEmpty()) {
             return null;
-        }
-        GruposYPaquetes gruposYPaquetesCopia = new GruposYPaquetes(getNombre());
-        for(ElemUn elem : elementosFiltrados) {
-            gruposYPaquetesCopia.agregarElemento(elem);
         }
         return gruposYPaquetesCopia;
     }

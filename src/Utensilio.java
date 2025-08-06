@@ -7,8 +7,9 @@ public class Utensilio extends ElemUn {
     private int dureza;
     private ArrayList<String> caract;
 
-    public Utensilio(String nombre, double precio, int peso, int dureza) {
+    public Utensilio(String nombre, String origen, double precio, int peso, int dureza) {
         super(nombre);
+        this.origen = origen;
         this.precio = precio;
         this.peso = peso;
         this.dureza = dureza;
@@ -42,9 +43,14 @@ public class Utensilio extends ElemUn {
         return elemVidriera;
     }
 
+    public boolean sePuedeExhibir(Condicion c) {
+        return c.cumple(this);
+    }
+
     public ElemUn getCopia(Condicion c) {
         if(c.cumple(this)) {
-            Utensilio utensilioCopia = new Utensilio(getNombre(), getPrecio(), getPeso(), getDureza());
+            Utensilio utensilioCopia = new Utensilio(getNombre(), getOrigen(), getPrecio(), getPeso(), getDureza());
+            utensilioCopia.caract = new ArrayList<>(caract);
             return utensilioCopia;
         }
         return null;

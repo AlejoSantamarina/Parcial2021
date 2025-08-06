@@ -17,5 +17,6 @@ public abstract class ElemUn {
     public abstract int getDureza();
     public abstract ArrayList<String> getCaract();
     public abstract ArrayList<ElemUn> buscar(Condicion c);
+    public abstract boolean sePuedeExhibir(Condicion c);
     public abstract ElemUn getCopia(Condicion c);
 }
